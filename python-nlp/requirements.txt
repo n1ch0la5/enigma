@@ -6,6 +6,9 @@ scikit-learn>=1.4
 networkx>=3.2
 python-dateutil>=2.9
 
+# Lets pydantic resolve `X | Y` union annotations on Python < 3.10.
+eval_type_backport>=0.2; python_version < "3.10"
+
 # --- Optional upgrades (heavier; not required to run) ---
 # Enable semantic embeddings instead of the TF-IDF fallback:
 #   pip install sentence-transformers

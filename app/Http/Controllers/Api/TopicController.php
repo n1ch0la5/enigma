@@ -9,23 +9,24 @@ use App\Models\CoordinationCluster;
 use App\Models\Narrative;
 use App\Models\Post;
 use App\Models\Topic;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class TopicController extends Controller
 {
     /** Create a saved investigation. */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $data = $request->validate([
-            'label'         => 'required|string|max:200',
-            'query_terms'   => 'array',
+            'label' => 'required|string|max:200',
+            'query_terms' => 'array',
             'query_terms.*' => 'string',
         ]);
 
         $topic = Topic::create([
-            'slug'        => Str::slug($data['label']) . '-' . Str::random(4),
-            'label'       => $data['label'],
+            'slug' => Str::slug($data['label']).'-'.Str::random(4),
+            'label' => $data['label'],
             'query_terms' => $data['query_terms'] ?? [],
         ]);
 
@@ -33,10 +34,10 @@ class TopicController extends Controller
     }
 
     /** Queue collection of one or more Reddit threads for this topic. */
-    public function collect(Request $request, Topic $topic)
+    public function collect(Request $request, Topic $topic): JsonResponse
     {
         $data = $request->validate([
-            'permalinks'   => 'required|array|min:1',
+            'permalinks' => 'required|array|min:1',
             'permalinks.*' => 'string',
         ]);
 
@@ -48,14 +49,15 @@ class TopicController extends Controller
     }
 
     /** Queue the analysis pipeline. */
-    public function analyze(Request $request, Topic $topic)
+    public function analyze(Request $request, Topic $topic): JsonResponse
     {
-        AnalyzeTopic::dispatch($topic->id, $request->input('params', []));
+        AnalyzeTopic::dispatch($topic->id, (array) $request->input('params', []));
+
         return response()->json(['status' => 'queued']);
     }
 
     /** Full picture for the dashboard: timeline + narratives + coordination. */
-    public function show(Topic $topic)
+    public function show(Topic $topic): JsonResponse
     {
         // Hourly mention timeline (the first thing the dashboard renders)
         $timeline = Post::where('topic_id', $topic->id)
@@ -64,13 +66,13 @@ class TopicController extends Controller
             ->get();
 
         return response()->json([
-            'topic'        => $topic,
-            'counts'       => ['posts' => Post::where('topic_id', $topic->id)->count()],
-            'timeline'     => $timeline,
-            'narratives'   => Narrative::where('topic_id', $topic->id)
-                                ->orderByDesc('size')->get(),
+            'topic' => $topic,
+            'counts' => ['posts' => Post::where('topic_id', $topic->id)->count()],
+            'timeline' => $timeline,
+            'narratives' => Narrative::where('topic_id', $topic->id)
+                ->orderByDesc('size')->get(),
             'coordination' => CoordinationCluster::where('topic_id', $topic->id)
-                                ->orderByDesc('score')->get(),
+                ->orderByDesc('score')->get(),
         ]);
     }
 }

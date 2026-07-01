@@ -18,13 +18,13 @@ class RedditClient
 
     public function __construct()
     {
-        $this->userAgent = config('enigma.reddit.user_agent');
+        $this->userAgent = (string) config('enigma.reddit.user_agent');
     }
 
     /** Fetch (and cache) an app-only bearer token. */
     private function token(): string
     {
-        return Cache::remember('reddit_token', now()->addMinutes(55), function () {
+        return Cache::remember('reddit_token', now()->addMinutes(55), function (): string {
             $resp = Http::withBasicAuth(
                 config('enigma.reddit.client_id'),
                 config('enigma.reddit.client_secret'),
@@ -37,31 +37,44 @@ class RedditClient
                 ->throw()
                 ->json();
 
-            return $resp['access_token'];
+            return is_array($resp) && isset($resp['access_token']) ? (string) $resp['access_token'] : '';
         });
     }
 
+    /**
+     * @param  array<string, mixed>  $query
+     * @return array<string, mixed>
+     */
     private function get(string $path, array $query = []): array
     {
-        return Http::withToken($this->token())
+        $data = Http::withToken($this->token())
             ->withHeaders(['User-Agent' => $this->userAgent])
             ->baseUrl('https://oauth.reddit.com')
             ->get($path, $query)
             ->throw()
             ->json();
+
+        return is_array($data) ? $data : [];
     }
 
     /**
      * Return the raw comment listing for a submission.
      * $permalink e.g. "/r/DC_Cinematic/comments/abc123/supergirl_trailer/"
+     *
+     * @return array<string, mixed>
      */
     public function commentsByPermalink(string $permalink, int $limit = 500): array
     {
-        $path = rtrim($permalink, '/') . '.json';
+        $path = rtrim($permalink, '/').'.json';
+
         return $this->get($path, ['limit' => $limit, 'depth' => 10, 'threaded' => false]);
     }
 
-    /** Search submissions in a subreddit for a query (to discover threads). */
+    /**
+     * Search submissions in a subreddit for a query (to discover threads).
+     *
+     * @return array<string, mixed>
+     */
     public function searchSubreddit(string $subreddit, string $query, string $sort = 'new', int $limit = 100): array
     {
         return $this->get("/r/{$subreddit}/search", [

@@ -24,6 +24,7 @@ class AnalyzeTopic implements ShouldQueue
 
     public int $timeout = 300;
 
+    /** @param array<string, mixed> $params */
     public function __construct(public int $topicId, public array $params = []) {}
 
     public function handle(NlpClient $nlp): void
@@ -39,9 +40,9 @@ class AnalyzeTopic implements ShouldQueue
         }
 
         $payloadPosts = $posts->map(fn (Post $p) => [
-            'id'        => $p->id,
+            'id' => $p->id,
             'author_id' => (string) ($p->author_id ?? 0),
-            'text'      => $p->body,
+            'text' => $p->body,
             'posted_at' => $p->posted_at->toIso8601String(),
         ])->all();
 
@@ -61,43 +62,59 @@ class AnalyzeTopic implements ShouldQueue
             CoordinationCluster::where('topic_id', $topic->id)->delete();
             DB::table('edges')->where('topic_id', $topic->id)->delete();
 
-            foreach ($result['narratives'] as $n) {
+            // The NLP service returns an untyped JSON payload; normalize each
+            // section to an array before persisting.
+            $coordination = (array) ($result['coordination'] ?? []);
+
+            foreach ((array) ($result['narratives'] ?? []) as $narrativeData) {
+                $n = (array) $narrativeData;
+
                 $narrative = Narrative::create([
-                    'topic_id'   => $topic->id,
-                    'label'      => $n['label'],
-                    'keywords'   => $n['keywords'],
-                    'size'       => $n['size'],
-                    'started_at' => $n['started_at'],
-                    'peaked_at'  => $n['peaked_at'],
+                    'topic_id' => $topic->id,
+                    'label' => $n['label'] ?? null,
+                    'keywords' => $n['keywords'] ?? [],
+                    'size' => $n['size'] ?? 0,
+                    'started_at' => $n['started_at'] ?? null,
+                    'peaked_at' => $n['peaked_at'] ?? null,
                 ]);
-                $rows = collect($n['post_ids'])->map(fn ($pid) => [
-                    'narrative_id'      => $narrative->id,
-                    'post_id'           => $pid,
-                    'is_representative' => in_array($pid, $n['representative_post_ids'], true),
-                ])->all();
-                DB::table('narrative_posts')->insert($rows);
+
+                $representative = (array) ($n['representative_post_ids'] ?? []);
+                $rows = [];
+                foreach ((array) ($n['post_ids'] ?? []) as $postId) {
+                    $rows[] = [
+                        'narrative_id' => $narrative->id,
+                        'post_id' => $postId,
+                        'is_representative' => in_array($postId, $representative, true),
+                    ];
+                }
+
+                if ($rows !== []) {
+                    DB::table('narrative_posts')->insert($rows);
+                }
             }
 
-            foreach ($result['coordination']['edges'] as $e) {
+            foreach ((array) ($coordination['edges'] ?? []) as $edgeData) {
+                $e = (array) $edgeData;
                 DB::table('edges')->insert([
-                    'topic_id'    => $topic->id,
-                    'author_a'    => $e['author_a'] ?: null,
-                    'author_b'    => $e['author_b'] ?: null,
-                    'edge_type'   => 'co_similar',
-                    'weight'      => $e['weight'],
-                    'window_secs' => $e['window_secs'],
+                    'topic_id' => $topic->id,
+                    'author_a' => $e['author_a'] ?: null,
+                    'author_b' => $e['author_b'] ?: null,
+                    'edge_type' => 'co_similar',
+                    'weight' => $e['weight'] ?? 0,
+                    'window_secs' => $e['window_secs'] ?? null,
                 ]);
             }
 
-            foreach ($result['coordination']['clusters'] as $c) {
+            foreach ((array) ($coordination['clusters'] ?? []) as $clusterData) {
+                $c = (array) $clusterData;
                 CoordinationCluster::create([
-                    'topic_id'          => $topic->id,
-                    'author_ids'        => $c['author_ids'],
-                    'score'             => $c['score'],
-                    'label'             => $c['label'],
-                    'signals'           => $c['signals'],
-                    'baseline'          => $c['baseline'],
-                    'evidence_post_ids' => $c['evidence_post_ids'],
+                    'topic_id' => $topic->id,
+                    'author_ids' => $c['author_ids'] ?? [],
+                    'score' => $c['score'] ?? 0,
+                    'label' => $c['label'] ?? null,
+                    'signals' => $c['signals'] ?? [],
+                    'baseline' => $c['baseline'] ?? [],
+                    'evidence_post_ids' => $c['evidence_post_ids'] ?? [],
                 ]);
             }
         });

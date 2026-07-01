@@ -29,7 +29,11 @@ class CollectRedditThread implements ShouldQueue
         public string $permalink,
     ) {}
 
-    /** Throttle to the configured RPM across all workers (see AppServiceProvider). */
+    /**
+     * Throttle to the configured RPM across all workers (see AppServiceProvider).
+     *
+     * @return array<int, object>
+     */
     public function middleware(): array
     {
         return [new RateLimited('reddit')];
@@ -60,15 +64,15 @@ class CollectRedditThread implements ShouldQueue
             Post::updateOrCreate(
                 ['platform' => 'reddit', 'platform_post_id' => $p['platform_post_id']],
                 [
-                    'topic_id'        => $topic->id,
-                    'source_id'       => $source->id,
-                    'author_id'       => $authorIds[$p['author']] ?? null,
-                    'url'             => $p['url'],
-                    'body'            => $p['body'],
+                    'topic_id' => $topic->id,
+                    'source_id' => $source->id,
+                    'author_id' => $authorIds[$p['author']] ?? null,
+                    'url' => $p['url'],
+                    'body' => $p['body'],
                     'body_normalized' => mb_strtolower(trim($p['body'])),
-                    'score'           => $p['score'],
-                    'posted_at'       => Carbon::createFromTimestampUTC($p['posted_at']),
-                    'raw'             => $p,
+                    'score' => $p['score'],
+                    'posted_at' => Carbon::createFromTimestampUTC($p['posted_at']),
+                    'raw' => $p,
                 ],
             );
         }

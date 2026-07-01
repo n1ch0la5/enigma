@@ -8,24 +8,31 @@ use Illuminate\Support\Facades\Http;
 class NlpClient
 {
     /**
-     * @param array $posts   [['id'=>, 'author_id'=>, 'text'=>, 'posted_at'=>ISO|epoch], ...]
-     * @param array $authors ['author_id' => ['account_age_days' => int], ...]
+     * @param  array<int, array{id: int, author_id: string, text: string, posted_at: string}>  $posts
+     * @param  array<int|string, array{account_age_days: int}>  $authors
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
     public function analyze(array $posts, array $authors = [], array $params = []): array
     {
-        return Http::baseUrl(config('enigma.nlp.base_url'))
+        $data = Http::baseUrl(config('enigma.nlp.base_url'))
             ->timeout(config('enigma.nlp.timeout'))
             ->post('/analyze', [
-                'posts'   => $posts,
+                'posts' => $posts,
                 'authors' => (object) $authors,
-                'params'  => (object) $params,
+                'params' => (object) $params,
             ])
             ->throw()
             ->json();
+
+        return is_array($data) ? $data : [];
     }
 
+    /** @return array<string, mixed> */
     public function health(): array
     {
-        return Http::baseUrl(config('enigma.nlp.base_url'))->get('/health')->json();
+        $data = Http::baseUrl(config('enigma.nlp.base_url'))->get('/health')->json();
+
+        return is_array($data) ? $data : [];
     }
 }

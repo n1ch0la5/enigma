@@ -1,0 +1,32 @@
+# Enigma — local dev stack.
+# Brings up Postgres (with pgvector), Redis, and the Python NLP service.
+# The Laravel app can run on the host (php artisan serve) against these.
+
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_DB: enigma
+      POSTGRES_USER: enigma
+      POSTGRES_PASSWORD: enigma
+    ports:
+      - "5432:5432"
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+      # Auto-load schema on first boot:
+      - ./db/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  nlp:
+    build: ./python-nlp
+    environment:
+      EMBED_BACKEND: tfidf        # set to "minilm" after installing sentence-transformers
+    ports:
+      - "8000:8000"
+
+volumes:
+  dbdata:

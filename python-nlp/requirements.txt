@@ -1,0 +1,14 @@
+fastapi>=0.110
+uvicorn[standard]>=0.29
+pydantic>=2.6
+numpy>=1.26
+scikit-learn>=1.4
+networkx>=3.2
+python-dateutil>=2.9
+
+# --- Optional upgrades (heavier; not required to run) ---
+# Enable semantic embeddings instead of the TF-IDF fallback:
+#   pip install sentence-transformers
+#   EMBED_BACKEND=minilm
+# Better topic labels:
+#   pip install bertopic

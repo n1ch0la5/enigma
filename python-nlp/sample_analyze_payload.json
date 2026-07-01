@@ -1,0 +1,296 @@
+{
+  "posts": [
+    {
+      "id": 0,
+      "author_id": "user_organic_0",
+      "text": "Honestly the trailer looked fun, might check it out this weekend",
+      "posted_at": 1718000000
+    },
+    {
+      "id": 1,
+      "author_id": "user_organic_1",
+      "text": "The VFX seemed a little rough but Alcock looks great as Kara",
+      "posted_at": 1718036000
+    },
+    {
+      "id": 2,
+      "author_id": "user_organic_2",
+      "text": "Not sure about the tone, feels very Guardians of the Galaxy",
+      "posted_at": 1718072000
+    },
+    {
+      "id": 3,
+      "author_id": "user_organic_3",
+      "text": "I loved the comic this is based on, cautiously optimistic",
+      "posted_at": 1718108000
+    },
+    {
+      "id": 4,
+      "author_id": "user_organic_4",
+      "text": "Momoa as Lobo is inspired casting, that alone sells me a ticket",
+      "posted_at": 1718144000
+    },
+    {
+      "id": 5,
+      "author_id": "user_organic_5",
+      "text": "Reviews are mixed but I'll make up my own mind",
+      "posted_at": 1718180000
+    },
+    {
+      "id": 6,
+      "author_id": "user_organic_6",
+      "text": "The pacing looks off in the trailer but could be editing",
+      "posted_at": 1718216000
+    },
+    {
+      "id": 7,
+      "author_id": "user_organic_7",
+      "text": "Why does every superhero movie need quippy humor now",
+      "posted_at": 1718252000
+    },
+    {
+      "id": 8,
+      "author_id": "burst_acct_0",
+      "text": "Supergirl is woke garbage and its going to flop hard",
+      "posted_at": 1718180000
+    },
+    {
+      "id": 9,
+      "author_id": "burst_acct_1",
+      "text": "Supergirl is woke garbage and it's going to flop hard!!",
+      "posted_at": 1718180002
+    },
+    {
+      "id": 10,
+      "author_id": "burst_acct_2",
+      "text": "Supergirl is woke garbage, going to flop hard",
+      "posted_at": 1718180004
+    },
+    {
+      "id": 11,
+      "author_id": "burst_acct_3",
+      "text": "Supergirl is woke garbage and its going to flop hard 100%",
+      "posted_at": 1718180006
+    },
+    {
+      "id": 12,
+      "author_id": "burst_acct_4",
+      "text": "Supergirl is woke garbage and its going to flop hard",
+      "posted_at": 1718180008
+    },
+    {
+      "id": 13,
+      "author_id": "burst_acct_5",
+      "text": "Supergirl is woke garbage and it's going to flop hard!!",
+      "posted_at": 1718180010
+    },
+    {
+      "id": 14,
+      "author_id": "burst_acct_6",
+      "text": "Supergirl is woke garbage, going to flop hard",
+      "posted_at": 1718180012
+    },
+    {
+      "id": 15,
+      "author_id": "burst_acct_7",
+      "text": "Supergirl is woke garbage and its going to flop hard 100%",
+      "posted_at": 1718180014
+    },
+    {
+      "id": 16,
+      "author_id": "burst_acct_8",
+      "text": "Supergirl is woke garbage and its going to flop hard",
+      "posted_at": 1718180016
+    },
+    {
+      "id": 17,
+      "author_id": "burst_acct_9",
+      "text": "Supergirl is woke garbage and it's going to flop hard!!",
+      "posted_at": 1718180018
+    },
+    {
+      "id": 18,
+      "author_id": "burst_acct_0",
+      "text": "Supergirl is woke garbage and it's going to flop hard!!",
+      "posted_at": 1718180025
+    },
+    {
+      "id": 19,
+      "author_id": "burst_acct_1",
+      "text": "Supergirl is woke garbage, going to flop hard",
+      "posted_at": 1718180027
+    },
+    {
+      "id": 20,
+      "author_id": "burst_acct_2",
+      "text": "Supergirl is woke garbage and its going to flop hard 100%",
+      "posted_at": 1718180029
+    },
+    {
+      "id": 21,
+      "author_id": "burst_acct_3",
+      "text": "Supergirl is woke garbage and its going to flop hard",
+      "posted_at": 1718180031
+    },
+    {
+      "id": 22,
+      "author_id": "burst_acct_4",
+      "text": "Supergirl is woke garbage and it's going to flop hard!!",
+      "posted_at": 1718180033
+    },
+    {
+      "id": 23,
+      "author_id": "burst_acct_5",
+      "text": "Supergirl is woke garbage, going to flop hard",
+      "posted_at": 1718180035
+    },
+    {
+      "id": 24,
+      "author_id": "burst_acct_6",
+      "text": "Supergirl is woke garbage and its going to flop hard 100%",
+      "posted_at": 1718180037
+    },
+    {
+      "id": 25,
+      "author_id": "burst_acct_7",
+      "text": "Supergirl is woke garbage and its going to flop hard",
+      "posted_at": 1718180039
+    },
+    {
+      "id": 26,
+      "author_id": "burst_acct_8",
+      "text": "Supergirl is woke garbage and it's going to flop hard!!",
+      "posted_at": 1718180041
+    },
+    {
+      "id": 27,
+      "author_id": "burst_acct_9",
+      "text": "Supergirl is woke garbage, going to flop hard",
+      "posted_at": 1718180043
+    },
+    {
+      "id": 28,
+      "author_id": "burst_acct_0",
+      "text": "Supergirl is woke garbage, going to flop hard",
+      "posted_at": 1718180050
+    },
+    {
+      "id": 29,
+      "author_id": "burst_acct_1",
+      "text": "Supergirl is woke garbage and its going to flop hard 100%",
+      "posted_at": 1718180052
+    },
+    {
+      "id": 30,
+      "author_id": "burst_acct_2",
+      "text": "Supergirl is woke garbage and its going to flop hard",
+      "posted_at": 1718180054
+    },
+    {
+      "id": 31,
+      "author_id": "burst_acct_3",
+      "text": "Supergirl is woke garbage and it's going to flop hard!!",
+      "posted_at": 1718180056
+    },
+    {
+      "id": 32,
+      "author_id": "burst_acct_4",
+      "text": "Supergirl is woke garbage, going to flop hard",
+      "posted_at": 1718180058
+    },
+    {
+      "id": 33,
+      "author_id": "burst_acct_5",
+      "text": "Supergirl is woke garbage and its going to flop hard 100%",
+      "posted_at": 1718180060
+    },
+    {
+      "id": 34,
+      "author_id": "burst_acct_6",
+      "text": "Supergirl is woke garbage and its going to flop hard",
+      "posted_at": 1718180062
+    },
+    {
+      "id": 35,
+      "author_id": "burst_acct_7",
+      "text": "Supergirl is woke garbage and it's going to flop hard!!",
+      "posted_at": 1718180064
+    },
+    {
+      "id": 36,
+      "author_id": "burst_acct_8",
+      "text": "Supergirl is woke garbage, going to flop hard",
+      "posted_at": 1718180066
+    },
+    {
+      "id": 37,
+      "author_id": "burst_acct_9",
+      "text": "Supergirl is woke garbage and its going to flop hard 100%",
+      "posted_at": 1718180068
+    }
+  ],
+  "authors": {
+    "user_organic_0": {
+      "account_age_days": 1500
+    },
+    "user_organic_1": {
+      "account_age_days": 1540
+    },
+    "user_organic_2": {
+      "account_age_days": 1580
+    },
+    "user_organic_3": {
+      "account_age_days": 1620
+    },
+    "user_organic_4": {
+      "account_age_days": 1660
+    },
+    "user_organic_5": {
+      "account_age_days": 1700
+    },
+    "user_organic_6": {
+      "account_age_days": 1740
+    },
+    "user_organic_7": {
+      "account_age_days": 1780
+    },
+    "burst_acct_0": {
+      "account_age_days": 20
+    },
+    "burst_acct_1": {
+      "account_age_days": 21
+    },
+    "burst_acct_2": {
+      "account_age_days": 22
+    },
+    "burst_acct_3": {
+      "account_age_days": 23
+    },
+    "burst_acct_4": {
+      "account_age_days": 24
+    },
+    "burst_acct_5": {
+      "account_age_days": 25
+    },
+    "burst_acct_6": {
+      "account_age_days": 26
+    },
+    "burst_acct_7": {
+      "account_age_days": 27
+    },
+    "burst_acct_8": {
+      "account_age_days": 28
+    },
+    "burst_acct_9": {
+      "account_age_days": 29
+    }
+  },
+  "params": {
+    "window_secs": 120,
+    "sim_threshold": 0.8,
+    "near_threshold": 0.95,
+    "cluster_distance": 0.75,
+    "min_cluster_size": 3,
+    "min_coactions": 2
+  }
+}

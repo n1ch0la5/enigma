@@ -144,11 +144,13 @@ CREATE INDEX edges_topic_idx ON edges (topic_id, edge_type);
 CREATE TABLE coordination_clusters (
     id             BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     topic_id       BIGINT REFERENCES topics(id) ON DELETE CASCADE,
-    author_ids     BIGINT[] NOT NULL,
+    -- JSONB (not BIGINT[]) because Eloquent's 'array' cast writes JSON; these
+    -- are re-derivable outputs consumed as JSON by the API, never joined on.
+    author_ids     JSONB NOT NULL DEFAULT '[]',
     score          REAL NOT NULL,              -- 0..1 composite
     signals        JSONB NOT NULL DEFAULT '{}',-- {synchrony, similarity, account_age, cadence, overlap}
     baseline       JSONB NOT NULL DEFAULT '{}',-- expected value from matched random sample
-    evidence_post_ids BIGINT[] NOT NULL DEFAULT '{}', -- the actual synchronized posts
+    evidence_post_ids JSONB NOT NULL DEFAULT '[]', -- the actual synchronized posts
     label          TEXT,                       -- 'strong' | 'moderate' | 'weak'
     created_at     TIMESTAMPTZ NOT NULL DEFAULT now()
 );

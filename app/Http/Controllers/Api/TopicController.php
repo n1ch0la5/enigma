@@ -11,6 +11,7 @@ use App\Models\Post;
 use App\Models\Topic;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class TopicController extends Controller
@@ -59,9 +60,14 @@ class TopicController extends Controller
     /** Full picture for the dashboard: timeline + narratives + coordination. */
     public function show(Topic $topic): JsonResponse
     {
-        // Hourly mention timeline (the first thing the dashboard renders)
+        // Hourly mention timeline (the first thing the dashboard renders).
+        // Bucketing SQL is driver-specific: Postgres in production, sqlite in tests.
+        $bucket = DB::connection()->getDriverName() === 'pgsql'
+            ? "date_trunc('hour', posted_at)"
+            : "strftime('%Y-%m-%d %H:00:00', posted_at)";
+
         $timeline = Post::where('topic_id', $topic->id)
-            ->selectRaw("date_trunc('hour', posted_at) as bucket, count(*) as mentions")
+            ->selectRaw("{$bucket} as bucket, count(*) as mentions")
             ->groupBy('bucket')->orderBy('bucket')
             ->get();
 

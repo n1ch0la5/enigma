@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Database\Factories\TopicFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
@@ -15,6 +17,9 @@ use Illuminate\Support\Carbon;
  */
 class Topic extends Model
 {
+    /** @use HasFactory<TopicFactory> */
+    use HasFactory;
+
     public $timestamps = false;
 
     protected $guarded = [];

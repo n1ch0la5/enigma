@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Database\Factories\AuthorFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
@@ -21,6 +23,9 @@ use Illuminate\Support\Carbon;
  */
 class Author extends Model
 {
+    /** @use HasFactory<AuthorFactory> */
+    use HasFactory;
+
     public $timestamps = false;
 
     protected $guarded = [];

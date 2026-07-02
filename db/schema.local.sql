@@ -113,11 +113,12 @@ CREATE INDEX edges_topic_idx ON edges (topic_id, edge_type);
 CREATE TABLE coordination_clusters (
     id                BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     topic_id          BIGINT REFERENCES topics(id) ON DELETE CASCADE,
-    author_ids        BIGINT[] NOT NULL,
+    -- JSONB (not BIGINT[]) because Eloquent's 'array' cast writes JSON.
+    author_ids        JSONB NOT NULL DEFAULT '[]',
     score             REAL NOT NULL,
     signals           JSONB NOT NULL DEFAULT '{}',
     baseline          JSONB NOT NULL DEFAULT '{}',
-    evidence_post_ids BIGINT[] NOT NULL DEFAULT '{}',
+    evidence_post_ids JSONB NOT NULL DEFAULT '[]',
     label             TEXT,
     created_at        TIMESTAMPTZ NOT NULL DEFAULT now()
 );
